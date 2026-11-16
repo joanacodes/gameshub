@@ -110,7 +110,38 @@ function sequenceCarres(niv, payes) {
     });
   }
 
-  // Les niveaux restent ouverts après un rechargement, et l'accueil compte les réussites.
+  // Chaque niveau réussi garde un temps et un nombre de coups.
+  const sansScore = await page.evaluate(() => {
+    const p = JSON.parse(localStorage.getItem('points-lies'));
+    return ['carres', 'triangles', 'ponts'].flatMap((j) => Array.from({ length: 15 }, (_, i) => [j, i + 1]))
+      .filter(([j, n]) => !(p[j] && p[j][n] && p[j][n].temps > 0 && p[j][n].coups > 0)).map((x) => x.join(' '));
+  });
+  if (sansScore.length) { echecs++; console.log('Sans score :', sansScore.join(', ')); } else console.log('Les 45 scores sont enregistrés.');
+
+  // Rejouer un niveau compare au record au lieu de l'écraser.
+  const recordAvant = await page.evaluate(() => JSON.parse(localStorage.getItem('points-lies')).carres[1]);
+  await niveau('carres', 1, async () => {
+    for (const [[x1, y1], [x2, y2]] of sequenceCarres(carres[0], solC[0])) {
+      if (await gagne()) break;
+      const [x, y] = await ecran(((x1 + x2) / 2) * 10, ((y1 + y2) / 2) * 10);
+      await page.mouse.click(x, y);
+    }
+  });
+  const texteRecord = await page.textContent('#victoire-record');
+  const recordApres = await page.evaluate(() => JSON.parse(localStorage.getItem('points-lies')).carres[1]);
+  const coherent = recordApres.temps <= recordAvant.temps && recordApres.coups <= recordAvant.coups && /record/i.test(texteRecord);
+  if (!coherent) echecs++;
+  console.log(`Deuxième partie : « ${texteRecord} » ${coherent ? '' : '(INCOHÉRENT)'}`);
+
+  // Une progression de la première version (liste de niveaux) reste valable.
+  await page.evaluate(() => localStorage.setItem('points-lies', JSON.stringify({ ponts: [1, 2, 3] })));
+  await page.goto(base + '#ponts-4');
+  await page.waitForTimeout(200);
+  const repris = (await page.evaluate(() => location.hash)) === '#ponts-4' && !(await page.isHidden('#vue-jeu'));
+  if (!repris) echecs++;
+  console.log(repris ? 'Ancienne progression reprise.' : 'ÉCHEC : ancienne progression perdue.');
+
+  // L'accueil compte les réussites.
   await page.goto(base);
   const avancees = await page.$$eval('.avancee', (els) => els.map((e) => e.textContent.trim()));
   console.log('Accueil :', avancees.join(' | '));

@@ -50,6 +50,7 @@
         return;
       }
       const tris = ReglesTriangles.nouveauxTriangles(nv, voisins, i, j);
+      ui.coup();
       traits.push([i, j]);
       voisins[i].add(j); voisins[j].add(i);
       const ligne = Hub.el('line', { x1: nv.pts[i][0], y1: nv.pts[i][1], x2: nv.pts[j][0], y2: nv.pts[j][1], class: 'trait-joue', 'stroke-width': 1.6 }, gTraits);

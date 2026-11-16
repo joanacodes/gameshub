@@ -76,6 +76,7 @@
         return;
       }
       if (!ferme.length) energie--;
+      ui.coup();
       traces.add(l);
       dessinerTrait(l, 'trait-joue');
       for (const b of ferme) fermer(b, true);

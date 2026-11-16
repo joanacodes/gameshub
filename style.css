@@ -110,6 +110,7 @@ h1, h2 { font-family: var(--titre); font-weight: 600; margin: 0; text-wrap: bala
 .carte-corps { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
 .carte h2 { font-size: 1.45rem; color: var(--accent); }
 .carte p { margin: 0; color: var(--encre-douce); font-size: 0.95rem; }
+.carte .carte-temps { font-size: 0.82rem; font-weight: 700; font-variant-numeric: tabular-nums; }
 .avancee { display: flex; align-items: center; gap: 10px; margin-top: 4px; font-size: 0.85rem; font-weight: 700; font-variant-numeric: tabular-nums; }
 .jauge { flex: 1; height: 6px; border-radius: 3px; background: var(--filet); overflow: hidden; }
 .jauge span { display: block; height: 100%; background: var(--accent); border-radius: 3px; }
@@ -151,6 +152,11 @@ h1, h2 { font-family: var(--titre); font-weight: 600; margin: 0; text-wrap: bala
 .niveau:hover { background: var(--accent-pale); }
 .niveau:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 .niveau.fini { background: var(--accent); color: var(--accent-texte); }
+.niveau { grid-template-rows: 1fr auto; padding-block: 6px 7px; }
+.niveau-n { align-self: center; }
+.niveau-temps { font-family: var(--texte); font-size: 0.7rem; font-weight: 800; font-variant-numeric: tabular-nums; opacity: 0.85; }
+.bilan { margin: 0; display: flex; flex-wrap: wrap; gap: 6px 18px; color: var(--encre-douce); font-variant-numeric: tabular-nums; }
+.bilan strong { color: var(--encre); }
 .niveau.fini::after {
   content: "";
   position: absolute;
@@ -167,6 +173,8 @@ h1, h2 { font-family: var(--titre); font-weight: 600; margin: 0; text-wrap: bala
 .jeu-tete { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
 .titre-niveau { font-size: 1.6rem; color: var(--accent); }
 .compteurs { display: flex; flex-wrap: wrap; gap: 8px; }
+.compteurs-jeu { display: contents; }
+.record { margin: -6px 0 0; min-height: 1.3em; font-size: 0.85rem; font-weight: 700; color: var(--encre-douce); font-variant-numeric: tabular-nums; }
 .compteur {
   display: inline-flex;
   align-items: center;
@@ -227,14 +235,19 @@ h1, h2 { font-family: var(--titre); font-weight: 600; margin: 0; text-wrap: bala
   position: fixed;
   inset: 0;
   z-index: 20;
-  display: grid;
-  place-items: center;
+  /* En flex et non en grille : dans une grille, la largeur en % du cadre se calcule
+     sur une colonne taillée à son contenu, et le cadre déborde sur un téléphone. */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: max(16px, env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) max(16px, env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
   background: color-mix(in srgb, var(--papier) 70%, transparent);
   backdrop-filter: blur(3px);
 }
 .victoire {
-  width: min(100%, 360px);
+  width: 100%;
+  max-width: 360px;
+  box-sizing: border-box;
   background: var(--surface);
   border: 2px solid var(--accent);
   border-radius: 22px;
@@ -249,6 +262,24 @@ h1, h2 { font-family: var(--titre); font-weight: 600; margin: 0; text-wrap: bala
 .victoire-sur { margin: 0; color: var(--encre-douce); font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; }
 .victoire h2 { font-size: 1.9rem; color: var(--accent); }
 .victoire p { margin: 0; }
+.victoire-scores { display: flex; justify-content: center; gap: 10px; margin-top: 6px; }
+.score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 96px;
+  padding: 8px 12px;
+  border-radius: 14px;
+  background: var(--accent-pale);
+  font-family: var(--titre);
+  font-size: 1.5rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
+.score small { font-family: var(--texte); font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--encre-douce); }
+.score em { font-family: var(--texte); font-style: normal; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent-texte); background: var(--accent); border-radius: 999px; padding: 1px 8px; margin-top: 3px; }
+.victoire .victoire-record { color: var(--encre-douce); font-size: 0.9rem; }
 .victoire-actions { display: flex; gap: 10px; justify-content: center; margin-top: 10px; flex-wrap: wrap; }
 @keyframes monte { from { transform: translateY(10px); opacity: 0.4; } }
 

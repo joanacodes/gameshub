@@ -25,6 +25,7 @@
     <a class="retour" href="#">‹ Les jeux</a>
     <h1 class="titre-jeu" id="niveaux-titre"></h1>
     <div class="regle" id="niveaux-regle"></div>
+    <p class="bilan" id="niveaux-bilan" hidden></p>
     <div class="grille-niveaux" id="niveaux-grille"></div>
   </section>
 
@@ -33,7 +34,12 @@
       <a class="retour" id="jeu-retour" href="#">‹ Niveaux</a>
       <h1 class="titre-niveau" id="jeu-titre"></h1>
     </div>
-    <div class="compteurs" id="jeu-compteurs"></div>
+    <div class="compteurs">
+      <div class="compteurs-jeu" id="jeu-compteurs"></div>
+      <span class="compteur" id="jeu-chrono"></span>
+      <span class="compteur" id="jeu-coups"></span>
+    </div>
+    <p class="record" id="jeu-record"></p>
     <div class="plateau-cadre">
       <svg id="plateau" role="img" aria-label="Plateau de jeu"></svg>
     </div>
@@ -49,6 +55,11 @@
       <p class="victoire-sur" id="victoire-sur"></p>
       <h2 id="victoire-titre">Niveau réussi</h2>
       <p id="victoire-texte"></p>
+      <div class="victoire-scores">
+        <span class="score" id="victoire-temps"></span>
+        <span class="score" id="victoire-coups"></span>
+      </div>
+      <p class="victoire-record" id="victoire-record"></p>
       <div class="victoire-actions">
         <a class="bouton" id="victoire-niveaux" href="#">Niveaux</a>
         <a class="bouton bouton-plein" id="victoire-suivant" href="#">Niveau suivant</a>

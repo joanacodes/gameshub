@@ -79,6 +79,7 @@
         return;
       }
       val[i] = apres;
+      ui.coup();
       if (!depuisAnnuler) pile.push({ i, avant });
       dessinerPont(i);
       const completes = afficher();
