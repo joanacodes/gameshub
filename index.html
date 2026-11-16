@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Points Liés</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,800&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main id="app">
+
+  <section id="vue-accueil" class="vue">
+    <header class="accueil-tete">
+      <h1 class="marque">Points Liés</h1>
+      <p class="accroche">Trois jeux de réflexion où l'on relie des points. Des niveaux à finir seul, du plus simple au plus retors.</p>
+    </header>
+    <div class="cartes" id="cartes-jeux"></div>
+  </section>
+
+  <section id="vue-niveaux" class="vue" hidden>
+    <a class="retour" href="#">‹ Les jeux</a>
+    <h1 class="titre-jeu" id="niveaux-titre"></h1>
+    <div class="regle" id="niveaux-regle"></div>
+    <div class="grille-niveaux" id="niveaux-grille"></div>
+  </section>
+
+  <section id="vue-jeu" class="vue" hidden>
+    <div class="jeu-tete">
+      <a class="retour" id="jeu-retour" href="#">‹ Niveaux</a>
+      <h1 class="titre-niveau" id="jeu-titre"></h1>
+    </div>
+    <div class="compteurs" id="jeu-compteurs"></div>
+    <div class="plateau-cadre">
+      <svg id="plateau" role="img" aria-label="Plateau de jeu"></svg>
+    </div>
+    <p class="message" id="jeu-message" aria-live="polite"></p>
+    <div class="actions">
+      <button type="button" class="bouton" id="bouton-annuler">Annuler</button>
+      <button type="button" class="bouton" id="bouton-recommencer">Recommencer</button>
+    </div>
+  </section>
+
+  <div class="voile" id="victoire" hidden>
+    <div class="victoire" role="dialog" aria-modal="true" aria-labelledby="victoire-titre">
+      <p class="victoire-sur" id="victoire-sur"></p>
+      <h2 id="victoire-titre">Niveau réussi</h2>
+      <p id="victoire-texte"></p>
+      <div class="victoire-actions">
+        <a class="bouton" id="victoire-niveaux" href="#">Niveaux</a>
+        <a class="bouton bouton-plein" id="victoire-suivant" href="#">Niveau suivant</a>
+      </div>
+    </div>
+  </div>
+
+</main>
+<script src="js/regles-carres.js"></script>
+<script src="js/regles-triangles.js"></script>
+<script src="js/regles-ponts.js"></script>
+<script src="js/niveaux-carres.js"></script>
+<script src="js/niveaux-triangles.js"></script>
+<script src="js/niveaux-ponts.js"></script>
+<script src="js/commun.js"></script>
+<script src="js/jeu-carres.js"></script>
+<script src="js/jeu-triangles.js"></script>
+<script src="js/jeu-ponts.js"></script>
+<script>Hub.lancer();</script>
+</body>
+</html>
